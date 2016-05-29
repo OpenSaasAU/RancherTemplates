@@ -1,0 +1,1 @@
+A Catalog of templates for Rancher - rancher.com
