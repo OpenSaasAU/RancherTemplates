@@ -5,13 +5,14 @@ CMSMysql:
 	MYSQL_USERNAME: ${db_userame}
 	MYSQL_PASSWORD: ${db_password}
   labels:
-    io.rancher.container.pull_image: always
+  	io.rancher.container.pull_image: always
   tty: true
   image: mariadb
   volumes:
   - ${db_data_location}:/var/lib/mysql
   stdin_open: true
   volume_driver: ${volume_driver}
+
 Concrete5App:
   labels:
     io.rancher.container.pull_image: always
