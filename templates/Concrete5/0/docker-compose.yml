@@ -5,7 +5,7 @@ CMSMysql:
 	MYSQL_USERNAME: ${db_userame}
 	MYSQL_PASSWORD: ${db_password}
   labels:
-  	io.rancher.container.pull_image: always
+    io.rancher.container.pull_image: always
   tty: true
   image: mariadb
   volumes:
