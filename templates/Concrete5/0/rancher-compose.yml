@@ -1,21 +1,21 @@
 .catalog:
-    name: "Concrete5"
-    version: "v0.1"
-    description: "Concrete5 CMS"
-    uuid: Concrete5-0
-    minimum_rancher_version: v0.51.0
-    questions:
-        - variable: root_password
-          description: "MySQL root password - keep this password complex and secure"
-          label: "MySQL Root Password"
-          required: true
-          default: "password"
-          type: "string"
-        - variable: db_name
-          description: "MySQL Database Name - to use in the Concrete5 setup"
-          label: "MySQL Database Name"
+	name: "Concrete5"
+	version: "v0.1"
+	description: "Concrete5 CMS"
+	uuid: Concrete5-0
+	minimum_rancher_version: v0.51.0
+	questions:
+		- variable: root_password
+		  description: "MySQL root password - keep this password complex and secure"
+		  label: "MySQL Root Password"
 		  required: true
-		  default:
+		  default: "password"
+		  type: "string"
+		- variable: db_name
+		  description: "MySQL Database Name - to use in the Concrete5 setup"
+		  label: "MySQL Database Name"
+		  required: true
+		  default: "CMS_DB"
 		  type: "string"
 		- variable: db_userame
 		  description: "MySQL Username - to use in the Concrete5 setup"
@@ -53,6 +53,6 @@
 		  default: "CMS_PACK_DATA"
 		  type: "string"
 CMSMysql:
-  scale: 1
+	scale: 1
 Concrete5App:
-  scale: 1
+	scale: 1
