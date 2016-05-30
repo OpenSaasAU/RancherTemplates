@@ -1,10 +1,10 @@
 .catalog:
-	name: "Concrete5"
-	version: "v0.1"
-	description: "Concrete5 CMS"
-	uuid: Concrete5-0
-	minimum_rancher_version: v0.51.0
-	questions:
+    name: "Concrete5"
+    version: "v0.1"
+    description: "Concrete5 CMS"
+    uuid: Concrete5-0
+    minimum_rancher_version: v0.51.0
+    questions:
         - variable: root_password
           description: "MySQL root password - keep this password complex and secure"
           label: "MySQL Root Password"
