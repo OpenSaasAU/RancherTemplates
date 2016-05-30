@@ -38,7 +38,6 @@
 		- variable: volume_driver
 		  description: "Volume Driver for the persistant data locations requires docker 1.7"
 		  label: "Volume Driver"
-		  required: false
 		  type: "string"
 		- variable: cms_application_data
 		  description: "Concrcte5 application folder for persistant data storage"
