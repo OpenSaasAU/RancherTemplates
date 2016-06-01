@@ -14,6 +14,7 @@ CMSMysql:
     volume_driver: ${volume_driver}
 
 CMSConfig:
+    image: opensaas/concrete5
     volumes:
     - ${cms_application_data}:/var/www/html/application
     - ${cms_packages_data}:/var/www/html/packages
