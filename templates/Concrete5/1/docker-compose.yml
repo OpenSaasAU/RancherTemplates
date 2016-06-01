@@ -26,7 +26,7 @@ CMSConfig:
         io.rancher.container.hostname_override: container_name
         io.rancher.container.start_once: true
     volume_driver: ${volume_driver}
-    command: chown -R www-data. application chown -R www-data. packages && sleep 2m && php -f concrete/bin/concrete5.php c5:install --db-server=mysql --db-username=${db_username} --db-password=${db_password} --db-database=${db_name} --site=${cms_sitename} --admin-email=${cms_admin_email} --admin-password=${cms_admin_password} -n -vvv
+    command: chown -R www-data. application && chown -R www-data. packages && sleep 2m && php -f concrete/bin/concrete5.php c5:install --db-server=mysql --db-username=${db_username} --db-password=${db_password} --db-database=${db_name} --site=${cms_sitename} --admin-email=${cms_admin_email} --admin-password=${cms_admin_password} -n -vvv
 
 Concrete5App:
     labels:
