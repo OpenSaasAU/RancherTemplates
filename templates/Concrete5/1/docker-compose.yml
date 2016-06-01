@@ -34,6 +34,7 @@ Concrete5App:
     image: opensaas/concrete5
     links:
     - CMSMysql:mysql
-    volumes_from:
-    - CMSConfig
+    volumes:
+    - ${cms_application_data}:/var/www/html/application
+    - ${cms_packages_data}:/var/www/html/packages
     stdin_open: true
