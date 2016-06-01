@@ -2,7 +2,7 @@
     name: "Concrete5"
     version: "v0.2"
     description: "Concrete5 CMS"
-    uuid: Concrete5-0
+    uuid: Concrete5-1
     minimum_rancher_version: v0.51.0
     questions:
         - variable: root_password
