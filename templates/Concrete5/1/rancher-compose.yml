@@ -17,7 +17,7 @@
           required: true
           default: "CMS_DB"
           type: "string"
-        - variable: db_userame
+        - variable: db_username
           description: "MySQL Username - to use in the Concrete5 setup"
           label: "MySQL Username"
           required: true
