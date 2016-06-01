@@ -37,4 +37,5 @@ Concrete5App:
     volumes:
     - ${cms_application_data}:/var/www/html/application
     - ${cms_packages_data}:/var/www/html/packages
+    volume_driver: ${volume_driver}
     stdin_open: true
