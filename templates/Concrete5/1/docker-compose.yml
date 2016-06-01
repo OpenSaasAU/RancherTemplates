@@ -15,6 +15,8 @@ CMSMysql:
 
 CMSConfig:
     image: opensaas/concrete5
+    tty: true
+    stdin_open: true
     volumes:
     - ${cms_application_data}:/var/www/html/application
     - ${cms_packages_data}:/var/www/html/packages
