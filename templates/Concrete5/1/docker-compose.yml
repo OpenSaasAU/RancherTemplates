@@ -2,7 +2,7 @@ CMSMysql:
     environment:
         MYSQL_ROOT_PASSWORD: ${root_password}
         MYSQL_DATABASE: ${db_name}
-        MYSQL_USERNAME: ${db_userame}
+        MYSQL_USER: ${db_userame}
         MYSQL_PASSWORD: ${db_password}
     labels:
         io.rancher.container.pull_image: always
