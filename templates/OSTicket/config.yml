@@ -1,0 +1,7 @@
+name: OSTicket
+description: |
+    OSTicket webbased helpdesk software
+version: v0.1
+category: Helpdesk
+maintainer: Opensaas
+projectURL: http://www.opensaas.com.au
