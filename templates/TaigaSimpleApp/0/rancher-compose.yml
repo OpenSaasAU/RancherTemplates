@@ -39,7 +39,7 @@
           required: true
           default: "TAI_MEDIA_DATA"
           type: "string"
-          - variable: taiga_conf_data
+        - variable: taiga_conf_data
           description: "Taiga configuration folder for persistant data storage"
           label: "Configuration Folder"
           required: true
