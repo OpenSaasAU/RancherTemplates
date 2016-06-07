@@ -14,11 +14,11 @@ CMSMysql:
     volume_driver: ${volume_driver}
 
 CMSConfig:
-    image: opensaas/concrete5
+    image: opensaas/concrete5:memcache
     tty: true
     stdin_open: true
     links:
-    - CMSMysql:mysql:memcache
+    - CMSMysql:mysql
     volumes:
     - ${cms_application_data}:/var/www/html/application
     - ${cms_packages_data}:/var/www/html/packages
