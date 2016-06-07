@@ -18,7 +18,7 @@ CMSConfig:
     tty: true
     stdin_open: true
     links:
-    - CMSMysql:mysql
+    - CMSMysql:mysql:memcache
     volumes:
     - ${cms_application_data}:/var/www/html/application
     - ${cms_packages_data}:/var/www/html/packages
