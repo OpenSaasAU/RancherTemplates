@@ -6,6 +6,7 @@ CMSMysql:
         MYSQL_PASSWORD: ${db_password}
     labels:
         io.rancher.container.pull_image: always
+        io.rancher.sidekicks: CMSConfig
     tty: true
     image: mariadb
     volumes:
@@ -31,7 +32,6 @@ CMSConfig:
 Concrete5App:
     labels:
         io.rancher.container.pull_image: always
-        io.rancher.sidekicks: CMSConfig
     tty: true
     links:
     - CMSMysql:mysql
