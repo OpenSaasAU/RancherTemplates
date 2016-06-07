@@ -36,7 +36,7 @@ Concrete5App:
     links:
     - CMSMysql:mysql
     - CMSCache:memcache
-    image: opensaas/concrete5
+    image: opensaas/concrete5:memcache
     volumes:
     - ${cms_application_data}:/var/www/html/application
     - ${cms_packages_data}:/var/www/html/packages
