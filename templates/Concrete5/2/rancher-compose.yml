@@ -62,7 +62,7 @@
           label: "Admin Password"
           required: true
           default: "password"
-          type: "string"
+          type: "password"
         - variable: cms_sitename
           description: "Concrcete5 Sitename"
           label: "Sitename"
