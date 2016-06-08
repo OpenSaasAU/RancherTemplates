@@ -17,7 +17,7 @@
           required: true
           default: "OST_DB"
           type: "string"
-        - variable: db_userame
+        - variable: db_username
           description: "MySQL Username - to use in the OSTicket setup"
           label: "MySQL Username"
           required: true
