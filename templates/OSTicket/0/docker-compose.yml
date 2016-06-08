@@ -1,4 +1,4 @@
-OSTicketApp1:
+OSTicketApp:
   labels:
     io.rancher.container.pull_image: always
   tty: true
@@ -19,7 +19,7 @@ OS-MySQL:
   labels:
     io.rancher.container.pull_image: always
   tty: true
-  image: mariadb
+  image: mysql
   volumes:
   - OS_DB_DATA:/var/lib/mysql
   stdin_open: true
