@@ -7,7 +7,7 @@ CMSMysql:
     labels:
         io.rancher.container.pull_image: always
     tty: true
-    image: mariadb
+    image: mysql
     volumes:
     - ${db_data_location}:/var/lib/mysql
     stdin_open: true
