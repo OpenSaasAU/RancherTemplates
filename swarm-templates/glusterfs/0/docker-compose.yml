@@ -5,6 +5,7 @@ glusterfs-server:
   labels:
     io.rancher.container.hostname_override: container_name
     io.rancher.container.create_agent: 'true'
+    io.rancher.container.network: 'true'
     io.rancher.sidekicks: glusterfs-daemon,glusterfs-data,glusterfs-volume-create
   command: giddyup leader elect --proxy-tcp-port=2160 /opt/rancher/peerprobe.sh ${network_mode}
 glusterfs-daemon:
