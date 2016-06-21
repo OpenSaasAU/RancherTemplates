@@ -6,7 +6,7 @@
     - variable: "VOLUME_NAME"
       description: "Name to give the Gluster volume"
       label: "Volume Name"
-      required: "true"
+      required: true
       default: "my_vol"
       type: "string"
     - variable: "network_mode"
@@ -16,7 +16,7 @@
         Take note, that Gluster will be accessible to anything accessible to
         the host. Do not use this configuration in an untrusted setting.
       label: "Gluster Networking Mode"
-      required: "true"
+      required: true
       type: "enum"
       default: "container:glusterfs-server"
       options:
@@ -24,6 +24,6 @@
         - "host"
 glusterfs-server:
   scale: 3
-  retain_ip: "true"
+  retain_ip: true
   metadata:
     volume_name: "${VOLUME_NAME}"
