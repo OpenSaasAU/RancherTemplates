@@ -1,0 +1,54 @@
+.catalog:
+    name: "OSTicket"
+    version: "v0.1"
+    description: "OSTicket Helpdesk software"
+    uuid: OSTicket-0
+    minimum_rancher_version: v0.51.0
+    questions:
+        - variable: root_password
+          description: "MySQL root password - keep this password complex and secure"
+          label: "MySQL Root Password"
+          required: true
+          default: "password"
+          type: "string"
+        - variable: db_name
+          description: "MySQL Database Name - to use in the OSTicket setup"
+          label: "MySQL Database Name"
+          required: true
+          default: "OST_DB"
+          type: "string"
+        - variable: db_username
+          description: "MySQL Username - to use in the OSTicket setup"
+          label: "MySQL Username"
+          required: true
+          default: "OST_USER"
+          type: "string"
+        - variable: db_password
+          description: "MySQL password for the above user - to use in the Concrete5 setup"
+          label: "MySQL Password"
+          required: true
+          default: "password"
+          type: "string"
+        - variable: db_data_location
+          description: "Location on the host for the database files"
+          label: "DB Data Location"
+          required: true
+          default: "OST_DB_DATA"
+          type: "string"
+        - variable: volume_driver
+          description: "Volume Driver for the persistant data locations requires docker 1.7"
+          label: "Volume Driver"
+          type: "string"
+        - variable: ost_application_data
+          description: "OSTicket application folder for persistant data storage"
+          label: "Application Folder"
+          required: true
+          default: "OST_APP_DATA"
+          type: "string"
+          
+
+
+OSTicketApp1:
+  scale: 1
+OS-MySQL:
+  scale: 1

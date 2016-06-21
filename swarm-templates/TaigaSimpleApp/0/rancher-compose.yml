@@ -1,0 +1,58 @@
+.catalog:
+    name: "Taiga"
+    version: "v0.1"
+    description: "Taiga Agile Project Management Software"
+    uuid: Tagia-0
+    minimum_rancher_version: v0.51.0
+    questions:
+        - variable: db_name
+          description: "Postgres Database Name"
+          label: "Postres Database Name"
+          required: true
+          default: "TAI_DB"
+          type: "string"
+        - variable: db_username
+          description: "Postgres Username"
+          label: "Postgres Username"
+          required: true
+          default: "TAI_USER"
+          type: "string"
+        - variable: db_password
+          description: "Postgres password for the above user - to use in the Concrete5 setup"
+          label: "Postgres Password"
+          required: true
+          default: "password"
+          type: "string"
+        - variable: db_data_location
+          description: "Location on the host for the database files"
+          label: "DB Data Location"
+          required: true
+          default: "TAI_DB_DATA"
+          type: "string"
+        - variable: volume_driver
+          description: "Volume Driver for the persistant data locations requires docker 1.7"
+          label: "Volume Driver"
+          type: "string"
+        - variable: taiga_media_data
+          description: "Taiga media folder for persistant data storage"
+          label: "Media Folder"
+          required: true
+          default: "TAI_MEDIA_DATA"
+          type: "string"
+        - variable: taiga_conf_data
+          description: "Taiga configuration folder for persistant data storage"
+          label: "Configuration Folder"
+          required: true
+          default: "TAI_CONF_DATA"
+          type: "string"
+        - variable: taiga_fqdn
+          description: "Domain Name your will use for Taiga"
+          label: "Domain Name"
+          required: true
+          default: "taiga.example.com"
+          type: "string"
+          
+PostgresDB:
+  scale: 1
+TaigaApp:
+  scale: 1

@@ -1,0 +1,26 @@
+OSTicketApp:
+  labels:
+    io.rancher.container.pull_image: always
+  tty: true
+  image: opensaas/osticket
+  links:
+  - OS-MySQL:mysql
+  volumes:
+  - ${ost_application_data}:/var/www/html/include
+  stdin_open: true
+  volume_driver: ${volume_driver}
+  
+OS-MySQL:
+  environment:
+        MYSQL_ROOT_PASSWORD: ${root_password}
+        MYSQL_DATABASE: ${db_name}
+        MYSQL_USER: ${db_username}
+        MYSQL_PASSWORD: ${db_password}
+  labels:
+    io.rancher.container.pull_image: always
+  tty: true
+  image: mysql
+  volumes:
+  - OS_DB_DATA:/var/lib/mysql
+  stdin_open: true
+  volume_driver: ${volume_driver}

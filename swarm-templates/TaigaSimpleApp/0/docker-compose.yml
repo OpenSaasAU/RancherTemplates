@@ -1,0 +1,32 @@
+PostgresDB:
+  environment:
+    POSTGRES_DB: ${db_name}
+    POSTGRES_USER: ${db_username}
+    POSTGRES_PASSWORD: ${db_password}
+  labels:
+    io.rancher.container.pull_image: always
+  tty: true
+  image: postgres
+  volumes:
+  - ${db_data_location}:/var/lib/postgresql/data
+  stdin_open: true
+  volume_driver: ${volume_driver}
+  
+TaigaApp:
+  environment:
+    TAIGA_HOSTNAME: ${taiga_fqdn}
+    TAIGA_DB_HOST: postgres
+    TAIGA_DB_NAME: ${db_name}
+    TAIGA_DB_USER: ${db_username}
+    TAIGA_DB_PASSWORD: ${db_password}
+  labels:
+    io.rancher.container.pull_image: always
+  tty: true
+  image: benhutchins/taiga
+  links:
+  - PostgresDB:postgres
+  volumes:
+  - ${taiga_media_data}:/usr/src/taiga-back/media
+  - ${taiga_conf_data}:/taiga
+  stdin_open: true
+  volume_driver: ${volume_driver}
