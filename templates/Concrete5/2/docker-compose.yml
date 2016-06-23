@@ -47,6 +47,6 @@ CMSCache:
     labels:
         io.rancher.container.pull_image: always
     tty: true
-    image: memcached
+    image: memcached:1.4
     stdin_open: true
     
