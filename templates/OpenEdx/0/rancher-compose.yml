@@ -17,7 +17,7 @@
           required: true
           default: "EDXAPP_ROOT"
           type: "string"
-          - variable: volume_driver
+        - variable: volume_driver
           description: "Volume Driver for the persistant data locations requires docker 1.7"
           label: "Volume Driver"
           type: "string"
