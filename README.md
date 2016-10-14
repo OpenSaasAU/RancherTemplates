@@ -1,1 +1,1 @@
-A Catalog of templates for Rancher - rancher.com
+A testing ground for Rancher Templates. rancher.com
