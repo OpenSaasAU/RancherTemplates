@@ -35,7 +35,7 @@
           required: true
           default: "EDX_MYSQL_DATA_ROOT"
           type: "string"
-        - variable: EDXAPP_PLATFROM_ROOT
+        - variable: EDXAPP_PLATFORM_ROOT
           description: "OpenEdx APP Platform Storage Location"
           label: "OpenEdx APP Platform Location"
           required: true
