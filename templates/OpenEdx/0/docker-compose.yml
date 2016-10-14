@@ -7,16 +7,12 @@ db:
         MYSQL_PASSWORD: password
     volumes:
      - ${EDX_MYSQL_DATA_ROOT}:/var/lib/mysql
-    ports:
-     - 3306:3306
     volume_driver: ${volume_driver}
 
 mongo:
     image: mongo:3.3
     volumes:
      - ${EDX_MONGO_DATA_ROOT}:/data/db
-    ports:
-     - 27017:27017
     command: "--auth"
     volume_driver: ${volume_driver}
 
@@ -26,32 +22,21 @@ es:
     image: opensaas/edx-elasticsearch
     volumes:
      - ${EDX_ES_DATA_ROOT}:/data
-    ports:
-     - 9100:9100
-     - 9200:9200
-     - 9300:9300
     volume_driver: ${volume_driver}
 
 memcache:
     image: memcached:1.4.24
     volumes:
      - ${EDX_MEMCACHE_DATA_ROOT}:/data
-    ports:
-     - 11211:11211
     volume_driver: ${volume_driver}
 
 nginx:
     image: opensaas/edx-nginx
-    ports:
-     - 80:80
-     - 443:443
 
 rabbitmq:
     image: rabbitmq:3.5.3
     volumes:
      - ${EDX_RABBIT_DATA_ROOT}:/var/lib/rabbitmq
-    ports:
-     - 5672:5672
     volume_driver: ${volume_driver}
 
 forums:
@@ -59,25 +44,17 @@ forums:
     image: edxops/forums:opencraft-v2
     volumes:
      - ${EDXAPP_CS_COMMENTS_ROOT}:/edx/app/forum/cs_comments_service
-    ports:
-     - 4567:4567
     volume_driver: ${volume_driver}
    
    
 xqueue:
     image: opensaas/edx-xqueue
-    ports:
-     - 8040:8040
-     - 18040:18040
     volumes:
      - ${EDXAPP_XQUEUE_ROOT}:/edx/app/edxapp/xqueue
     volume_driver: ${volume_driver}
 
 lms:
     image: opensaas/edxapp
-    ports:
-     - 8000:8000
-     - 18000:18000
     volumes:
      - ${EDXAPP_PLATFORM_ROOT}:/edx/app/edxapp/edx-platform
      - /dev/log:/dev/log
@@ -85,9 +62,6 @@ lms:
 
 cms:
     image: opensaas/edxapp
-    ports:
-     - 8010:8010
-     - 18010:18010
     volumes:
      - ${EDXAPP_PLATFORM_ROOT}:/edx/app/edxapp/edx-platform
      - /dev/log:/dev/log
