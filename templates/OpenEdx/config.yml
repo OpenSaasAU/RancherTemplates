@@ -1,0 +1,7 @@
+name: OpenEdx
+description: |
+    OpenEdx Platform
+version: v0.1
+category: LMS
+maintainer: Opensaas
+projectURL: http://www.opensaas.com.au

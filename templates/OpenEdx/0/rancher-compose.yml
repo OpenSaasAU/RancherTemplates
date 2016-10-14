@@ -1,0 +1,23 @@
+.catalog:
+    name: "OpenEdx"
+    version: "v0.1"
+    description: "OpenEdx Platform"
+    uuid: OpenEdx-0
+    minimum_rancher_version: v0.51.0
+    questions:
+        - variable: EDX_DATA_ROOT
+          description: "OpenEdx Data Storage Location"
+          label: "OpenEdx Data Location"
+          required: true
+          default: "EDX_DATA_ROOT"
+          type: "string"
+        - variable: EDXAPP_ROOT
+          description: "OpenEdx APP Storage Location"
+          label: "OpenEdx APP Location"
+          required: true
+          default: "EDXAPP_ROOT"
+          type: "string"
+          - variable: volume_driver
+          description: "Volume Driver for the persistant data locations requires docker 1.7"
+          label: "Volume Driver"
+          type: "string"
