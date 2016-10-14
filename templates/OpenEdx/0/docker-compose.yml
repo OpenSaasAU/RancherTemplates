@@ -1,33 +1,3 @@
-version: '2'
-#
-# Single Docker Compose cluster that will eventually start
-# all edX services in a single flock of coordinated containers
-#
-# This work is currently experimental and a number of services
-# are missing entirely.  Containers that are present will not
-# currently work without manual steps.  We are working on
-# addressing that.
-#
-# When running compose you must pass in two environment variables
-#
-# DOCKER_EDX_ROOT which points to the directory into which you checkout
-# your edX source code.  For example, assuming the following directory
-# structure under /home/me
-#
-# |-- edx-src
-# |   |-- discovery
-# |   |-- cs_comments_service
-# |   |-- edx_discovery
-# |   |-- edx-platform
-# |   |-- xqueue
-
-# you would define DOCKER_EDX_ROOT="/home/me/edx-src"
-#
-# DOCKER_DATA_ROOT is the location on your host machine where Docker
-# guests can access your local filesystem for storing persistent data
-# files, say MongoDB or MySQL data files.
-#
-services:
  db:
   image: mysql:5.7
   environment:
