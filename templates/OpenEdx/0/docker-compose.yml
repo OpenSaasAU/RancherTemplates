@@ -6,7 +6,7 @@ db:
         MYSQL_USER: edxapp001
         MYSQL_PASSWORD: password
     volumes:
-     - ${EDX_DATA_ROOT}/mysql/data:/var/lib/mysql
+     - ${EDX_MYSQL_DATA_ROOT}:/var/lib/mysql
     ports:
      - 3306:3306
     volume_driver: ${volume_driver}
@@ -14,7 +14,7 @@ db:
 mongo:
     image: mongo:3.3
     volumes:
-     - ${EDX_DATA_ROOT}/mongo/data:/data/db
+     - ${EDX_MONGO_DATA_ROOT}:/data/db
     ports:
      - 27017:27017
     command: "--auth"
@@ -25,7 +25,7 @@ mongo:
 es:
     image: opensaas/edx-elasticsearch
     volumes:
-     - ${EDX_DATA_ROOT}/elasticsearch/data:/data
+     - ${EDX_ES_DATA_ROOT}:/data
     ports:
      - 9100:9100
      - 9200:9200
@@ -35,7 +35,7 @@ es:
 memcache:
     image: memcached:1.4.24
     volumes:
-     - ${EDX_DATA_ROOT}/memcache/data:/data
+     - ${EDX_MEMCACHE_DATA_ROOT}:/data
     ports:
      - 11211:11211
     volume_driver: ${volume_driver}
@@ -49,7 +49,7 @@ nginx:
 rabbitmq:
     image: rabbitmq:3.5.3
     volumes:
-     - ${EDX_DATA_ROOT}/rabbitmq/data:/var/lib/rabbitmq
+     - ${EDX_RABBIT_DATA_ROOT}:/var/lib/rabbitmq
     ports:
      - 5672:5672
     volume_driver: ${volume_driver}
@@ -58,7 +58,7 @@ forums:
     container_name: forums
     image: edxops/forums:opencraft-v2
     volumes:
-     - ${EDXAPP_ROOT}/cs_comments_service:/edx/app/forum/cs_comments_service
+     - ${EDXAPP_CS_COMMENTS_ROOT}:/edx/app/forum/cs_comments_service
     ports:
      - 4567:4567
     volume_driver: ${volume_driver}
@@ -70,7 +70,7 @@ xqueue:
      - 8040:8040
      - 18040:18040
     volumes:
-     - ${EDXAPP_ROOT}/xqueue:/edx/app/edxapp/xqueue
+     - ${EDXAPP_XQUEUE_ROOT}:/edx/app/edxapp/xqueue
     volume_driver: ${volume_driver}
 
 lms:
@@ -79,7 +79,7 @@ lms:
      - 8000:8000
      - 18000:18000
     volumes:
-     - ${EDXAPP_ROOT}/edx-platform:/edx/app/edxapp/edx-platform
+     - ${EDXAPP_PLATFORM_ROOT}:/edx/app/edxapp/edx-platform
      - /dev/log:/dev/log
     volume_driver: ${volume_driver}
 
@@ -89,6 +89,6 @@ cms:
      - 8010:8010
      - 18010:18010
     volumes:
-     - ${EDXAPP_ROOT}/edx-platform:/edx/app/edxapp/edx-platform
+     - ${EDXAPP_PLATFORM_ROOT}:/edx/app/edxapp/edx-platform
      - /dev/log:/dev/log
     volume_driver: ${volume_driver}

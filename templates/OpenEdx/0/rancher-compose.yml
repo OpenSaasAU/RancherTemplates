@@ -5,17 +5,53 @@
     uuid: OpenEdx-0
     minimum_rancher_version: v0.51.0
     questions:
-        - variable: EDX_DATA_ROOT
-          description: "OpenEdx Data Storage Location"
-          label: "OpenEdx Data Location"
+        - variable: EDX_RABBIT_DATA_ROOT
+          description: "OpenEdx Rabbit Data Storage Location"
+          label: "OpenEdx Rabbit Data Location"
           required: true
-          default: "EDX_DATA_ROOT"
+          default: "EDX_RABBIT_DATA_ROOT"
           type: "string"
-        - variable: EDXAPP_ROOT
-          description: "OpenEdx APP Storage Location"
-          label: "OpenEdx APP Location"
+        - variable: EDX_MEMCACHE_DATA_ROOT
+          description: "OpenEdx Memcache Data Storage Location"
+          label: "OpenEdx Memcache Data Location"
           required: true
-          default: "EDXAPP_ROOT"
+          default: "EDX_MEMCACHE_DATA_ROOT"
+          type: "string"
+        - variable: EDX_ES_DATA_ROOT
+          description: "OpenEdx ES Data Storage Location"
+          label: "OpenEdx ES Data Location"
+          required: true
+          default: "EDX_ES_DATA_ROOT"
+          type: "string"
+        - variable: EDX_MONGO_DATA_ROOT
+          description: "OpenEdx Mongo Data Storage Location"
+          label: "OpenEdx Mongo Data Location"
+          required: true
+          default: "EDX_MONGO_DATA_ROOT"
+          type: "string"
+        - variable: EDX_MYSQL_DATA_ROOT
+          description: "OpenEdx MySQL Data Storage Location"
+          label: "OpenEdx MySQL Data Location"
+          required: true
+          default: "EDX_MYSQL_DATA_ROOT"
+          type: "string"
+        - variable: EDXAPP_PLATFROM_ROOT
+          description: "OpenEdx APP Platform Storage Location"
+          label: "OpenEdx APP Platform Location"
+          required: true
+          default: "EDXAPP_PLATFORM_ROOT"
+          type: "string"
+        - variable: EDXAPP_XQUEUE_ROOT
+          description: "OpenEdx APP xqueue Storage Location"
+          label: "OpenEdx APP xqueue Location"
+          required: true
+          default: "EDXAPP_XQUEUE_ROOT"
+          type: "string"
+        - variable: EDXAPP_CS_COMMENTS_ROOT
+          description: "OpenEdx APP CS Comments Storage Location"
+          label: "OpenEdx APP CS Comments Location"
+          required: true
+          default: "EDXAPP_CS_COMMENTS_ROOT"
           type: "string"
         - variable: volume_driver
           description: "Volume Driver for the persistant data locations requires docker 1.7"
