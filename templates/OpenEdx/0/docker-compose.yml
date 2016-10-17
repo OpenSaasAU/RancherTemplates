@@ -19,6 +19,9 @@ mongo:
 
 mongoConfig:
     image: mongo:3.3
+    labels:
+        io.rancher.container.hostname_override: container_name
+        io.rancher.container.start_once: true
     command: |
       bash -c "echo 'db.createUser({ user: \"edxapp\", pwd: \"password\", roles: [ { role: \"readWrite\", db: \"edxapp\" } ] });' > createEdxappUser.js; mongo mongo/edxapp createEdxappUser.js"
     
