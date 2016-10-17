@@ -13,7 +13,6 @@ mongo:
     labels:
         io.rancher.sidekicks: mongoConfig
     image: mongo:3.3
-    command: "--auth"
     volumes:
      - ${EDX_MONGO_DATA_ROOT}:/data/db
     volume_driver: ${volume_driver}
