@@ -13,16 +13,13 @@ mongo:
     labels:
         io.rancher.sidekicks: mongoConfig
     image: mongo:3.3
+    command: "--auth"
     volumes:
      - ${EDX_MONGO_DATA_ROOT}:/data/db
-    command: "--auth"
     volume_driver: ${volume_driver}
 
 mongoConfig:
     image: mongo:3.3
-    volumes:
-     - ${EDX_MONGO_DATA_ROOT}:/data/db
-    volume_driver: ${volume_driver}
     
 # Need to build our own for ES 0.9
 es:
@@ -80,4 +77,4 @@ edxappConfig:
         io.rancher.container.hostname_override: container_name
         io.rancher.container.start_once: true
     volume_driver: ${volume_driver}
-    command: bash -c "cd /edx/app/edx_ansible/edx_ansible/docker/plays; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml -i '127.0.0.1,' -c local -t 'install:base,install:system-requirements,install:configuration,install:app-requirements,install:code' -e@/ansible_overrides.yml; sudo su edxapp -s /bin/bash; source edxapp/edxapp_env; python /edx/app/edxapp/edx-platform/manage.py cms syncdb --settings=aws"
+    command: bash -c "cd /edx/app/edx_ansible/edx_ansible/docker/plays; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml -i '127.0.0.1,' -c local -t 'install:base,install:configuration,install:app-requirements,install:code' -e@/ansible_overrides.yml; sudo su edxapp -s /bin/bash; source edxapp/edxapp_env; python /edx/app/edxapp/edx-platform/manage.py cms syncdb --settings=aws"
