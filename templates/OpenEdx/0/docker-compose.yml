@@ -20,7 +20,7 @@ mongo:
 mongoConfig:
     image: mongo:3.3
     command: |
-      bash -c "echo 'db.createUser({ user: "edxapp", pwd: "password", roles: [ { role: "readWrite", db: "edxapp" } ] });' > createEdxappUser.js; mongo mongo/edxapp createEdxappUser.js"
+      bash -c "echo 'db.createUser({ user: \"edxapp\", pwd: \"password\", roles: [ { role: \"readWrite\", db: \"edxapp\" } ] });' > createEdxappUser.js; mongo mongo/edxapp createEdxappUser.js"
     
 # Need to build our own for ES 0.9
 es:
