@@ -53,7 +53,7 @@ forums:
     volume_driver: ${volume_driver}
    
 
-lms:
+edxapp:
     labels:
         io.rancher.container.pull_image: always
         io.rancher.sidekicks: edxappConfig
@@ -63,14 +63,6 @@ lms:
      - /dev/log:/dev/log
     volume_driver: ${volume_driver}
 
-cms:
-    labels:
-        io.rancher.container.pull_image: always
-    image: opensaas/edxapp
-    volumes:
-     - ${EDXAPP_PLATFORM_ROOT}:/edx/app/edxapp
-     - /dev/log:/dev/log
-    volume_driver: ${volume_driver}
 
 edxappConfig:
     image: opensaas/edxapp
