@@ -41,12 +41,6 @@
           required: true
           default: "EDXAPP_PLATFORM_ROOT"
           type: "string"
-        - variable: EDXAPP_XQUEUE_ROOT
-          description: "OpenEdx APP xqueue Storage Location"
-          label: "OpenEdx APP xqueue Location"
-          required: true
-          default: "EDXAPP_XQUEUE_ROOT"
-          type: "string"
         - variable: EDXAPP_CS_COMMENTS_ROOT
           description: "OpenEdx APP CS Comments Storage Location"
           label: "OpenEdx APP CS Comments Location"
