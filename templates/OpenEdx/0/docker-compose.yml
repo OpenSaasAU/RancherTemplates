@@ -1,5 +1,7 @@
 db:
     image: mysql:5.7
+    labels:
+        io.rancher.sidekicks: dbConfig
     environment:
         MYSQL_ROOT_PASSWORD: password
         MYSQL_DATABASE: edxapp
@@ -8,6 +10,14 @@ db:
     volumes:
      - ${EDX_MYSQL_DATA_ROOT}:/var/lib/mysql
     volume_driver: ${volume_driver}
+    
+dbConfig:
+    image: mysql:5.7
+    labels:
+        io.rancher.container.hostname_override: container_name
+        io.rancher.container.start_once: true
+    command: |
+      bash -c "mysql -uroot -ppassword -h db -e \"create database edxapp_csmh;"
 
 mongo:
     labels:
@@ -26,11 +36,11 @@ mongoConfig:
       bash -c "sleep 2m; echo 'db.createUser({ user: \"edxapp\", pwd: \"password\", roles: [ { role: \"readWrite\", db: \"edxapp\" } ] });' > createEdxappUser.js; mongo mongo/edxapp createEdxappUser.js"
     
 # Need to build our own for ES 0.9
-es:
-    image: opensaas/edx-elasticsearch
-    volumes:
-     - ${EDX_ES_DATA_ROOT}:/data
-    volume_driver: ${volume_driver}
+#es:
+#    image: opensaas/edx-elasticsearch
+#    volumes:
+#     - ${EDX_ES_DATA_ROOT}:/data
+#    volume_driver: ${volume_driver}
 
 memcache:
     image: memcached:1.4.24
@@ -39,18 +49,18 @@ memcache:
     volume_driver: ${volume_driver}
 
 
-rabbitmq:
-    image: rabbitmq:3.5.3
-    volumes:
-     - ${EDX_RABBIT_DATA_ROOT}:/var/lib/rabbitmq
-    volume_driver: ${volume_driver}
+#rabbitmq:
+#    image: rabbitmq:3.5.3
+#    volumes:
+#     - ${EDX_RABBIT_DATA_ROOT}:/var/lib/rabbitmq
+#    volume_driver: ${volume_driver}
 
-forums:
-    container_name: forums
-    image: edxops/forums:opencraft-v2
-    volumes:
-     - ${EDXAPP_CS_COMMENTS_ROOT}:/edx/app/forum/cs_comments_service
-    volume_driver: ${volume_driver}
+#forums:
+#    container_name: forums
+#    image: edxops/forums:opencraft-v2
+#    volumes:
+#     - ${EDXAPP_CS_COMMENTS_ROOT}:/edx/app/forum/cs_comments_service
+#    volume_driver: ${volume_driver}
    
 
 edxapp:
