@@ -53,6 +53,12 @@
           required: true
           default: "EDXAPP_STATICFILES_ROOT"
           type: "string"
+        - variable: EDXAPP_PLATFORM_NAME
+          description: "Openedx Platform Name"
+          label: "Openedx Platform Name"
+          required: true
+          default: "Opensaas Learning Platform"
+          type: "string"
         - variable: volume_driver
           description: "Volume Driver for the persistant data locations requires docker 1.7"
           label: "Volume Driver"
