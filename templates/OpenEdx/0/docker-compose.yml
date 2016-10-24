@@ -49,11 +49,11 @@ memcache:
     volume_driver: ${volume_driver}
 
 
-#rabbitmq:
-#    image: rabbitmq:3.5.3
-#    volumes:
-#     - ${EDX_RABBIT_DATA_ROOT}:/var/lib/rabbitmq
-#    volume_driver: ${volume_driver}
+rabbitmq:
+    image: rabbitmq:3.5.3
+    volumes:
+     - ${EDX_RABBIT_DATA_ROOT}:/var/lib/rabbitmq
+    volume_driver: ${volume_driver}
 
 #forums:
 #    container_name: forums
@@ -78,7 +78,7 @@ edxappConfig:
     volumes:
      - ${EDXAPP_PLATFORM_ROOT}:/edx/app/edxapp
      - /dev/log:/dev/log
-     - ${EDXAPP_STATICFILES_ROOT}:/edx/var/staticfiles
+     - ${EDXAPP_STATICFILES_ROOT}:/edx/var/edxapp/staticfiles
     labels:
         io.rancher.container.hostname_override: container_name
         io.rancher.container.start_once: true
@@ -89,5 +89,5 @@ edxappConfig:
 nginx:
     image: nginx
     volumes:
-     - ${EDXAPP_STATICFILES_ROOT}:/usr/share/nginx/html
+     - ${EDXAPP_STATICFILES_ROOT}:/usr/share/nginx/html/static
     volume_driver: ${volume_driver}
