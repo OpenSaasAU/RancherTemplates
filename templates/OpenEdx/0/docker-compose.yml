@@ -55,8 +55,8 @@ rabbitmq:
      - ${EDX_RABBIT_DATA_ROOT}:/var/lib/rabbitmq
     volume_driver: ${volume_driver}
     environment:
-     - RABBITMQ_DEFAULT_USER: celery
-     - RABBITMQ_DEFAULT_PASS: celery
+        RABBITMQ_DEFAULT_USER: celery
+        RABBITMQ_DEFAULT_PASS: celery
 
 #forums:
 #    container_name: forums
