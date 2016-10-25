@@ -74,6 +74,7 @@
         - variable: volume_driver
           description: "Volume Driver for the persistant data locations requires docker 1.7"
           label: "Volume Driver"
+          default: "convoy-nfs"
           type: "string"
     lb:
         load_balancer_config:

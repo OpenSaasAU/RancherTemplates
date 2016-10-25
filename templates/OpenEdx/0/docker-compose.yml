@@ -112,8 +112,4 @@ lb:
         io.rancher.loadbalancer.target.cms: ${STUDIO_DOMAIN_NAME}:80=8010
     tty: true
     image: rancher/load-balancer-service
-    links:
-     - lms:lms
-     - cms:cms
-     - nginx:nginx
     stdin_open: true
