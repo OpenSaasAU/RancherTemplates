@@ -60,6 +60,8 @@ rabbitmq:
 
 forums:
     image: opensaas/edx-forums
+    labels:
+        io.rancher.container.pull_image: always
     volumes:
      - ${EDXAPP_CS_COMMENTS_ROOT}:/edx/app/forum/cs_comments_service
     volume_driver: ${volume_driver}
