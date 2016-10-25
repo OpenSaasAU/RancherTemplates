@@ -106,9 +106,9 @@ lb:
     ports:
      - 80:80
     labels:
-        io.rancher.loadbalancer.target.nginx: ${EDX_DOMAIN_NAME}:80/static=80,${STUDIO_DOMAIN_NAME}:80/static=80
+        io.rancher.loadbalancer.target.nginx: preview.${EDX_DOMAIN_NAME}:80/static=80,${EDX_DOMAIN_NAME}:80/static=80,${STUDIO_DOMAIN_NAME}:80/static=80
         io.rancher.scheduler.global: 'true'
-        io.rancher.loadbalancer.target.lms: ${EDX_DOMAIN_NAME}:80=8000
+        io.rancher.loadbalancer.target.lms: ${EDX_DOMAIN_NAME}:80=8000,preview.${EDX_DOMAIN_NAME}:80=8000
         io.rancher.loadbalancer.target.cms: ${STUDIO_DOMAIN_NAME}:80=8010
     tty: true
     image: rancher/load-balancer-service
