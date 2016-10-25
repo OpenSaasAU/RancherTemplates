@@ -58,12 +58,11 @@ rabbitmq:
         RABBITMQ_DEFAULT_USER: celery
         RABBITMQ_DEFAULT_PASS: celery
 
-#forums:
-#    container_name: forums
-#    image: edxops/forums:opencraft-v2
-#    volumes:
-#     - ${EDXAPP_CS_COMMENTS_ROOT}:/edx/app/forum/cs_comments_service
-#    volume_driver: ${volume_driver}
+forums:
+    image: opensaas/edx-forums
+    volumes:
+     - ${EDXAPP_CS_COMMENTS_ROOT}:/edx/app/forum/cs_comments_service
+    volume_driver: ${volume_driver}
    
 
 lms:
