@@ -63,13 +63,13 @@
           description: "Studio/CMS domain name"
           label: "Studio/CMS domain name"
           required: true
-          default: "edx.opensaas.local"
+          default: "studio.edx.opensaas.local"
           type: "string"        
         - variable: EDX_DOMAIN_NAME
           description: "Edx/LMS domain name"
           label: "Edx/LMS domain name"
           required: true
-          default: "studio.edx.opensaas.local"
+          default: "edx.opensaas.local"
           type: "string"
         - variable: volume_driver
           description: "Volume Driver for the persistant data locations requires docker 1.7"
