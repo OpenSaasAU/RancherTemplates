@@ -117,5 +117,9 @@ lb:
         io.rancher.loadbalancer.target.lms: ${EDX_DOMAIN_NAME}:80=8000,preview.${EDX_DOMAIN_NAME}:80=8000
         io.rancher.loadbalancer.target.cms: ${STUDIO_DOMAIN_NAME}:80=8010
     tty: true
+    links:
+     - nginx:nginx
+     - cms:cms
+     - lms:lms
     image: rancher/load-balancer-service
     stdin_open: true
