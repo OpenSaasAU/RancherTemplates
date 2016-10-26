@@ -100,7 +100,7 @@ edxappMigrate:
         io.rancher.container.start_once: true
     volume_driver: ${volume_driver}
     command: |
-        bash -c "sleep 5m; rm -rf /edx/app/edx_ansible/edx_ansible; git clone https://github.com/OpenSaasAU/edx-configuration /edx/app/edx_ansible/edx_ansible; cd /edx/app/edx_ansible/edx_ansible/docker/plays; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml -i '127.0.0.1,' -c local -e \"migrate_db='yes' edxapp_staticfile_dir='/edx/var/edxapp/staticfiles/static' COMMON_MYSQL_MIGRATE_USER='root'\" -t 'install:app-requirements,install:code,gather_static_assets,migrate' -e@/edx/app/edx_ansible/edx_ansible/docker/build/edxapp/rancher_overrides.yml"
+        bash -c "sleep 5m; rm -rf /edx/app/edx_ansible/edx_ansible; git clone https://github.com/OpenSaasAU/edx-configuration /edx/app/edx_ansible/edx_ansible; cd /edx/app/edx_ansible/edx_ansible/docker/plays; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml -i '127.0.0.1,' -c local -e \"migrate_db='yes' COMMON_MYSQL_MIGRATE_USER='root'\" -t 'install:configuration,install:app-requirements,install:code,gather_static_assets,migrate' -e@/edx/app/edx_ansible/edx_ansible/docker/build/edxapp/ansible_overrides.yml"
         
 nginx:
     image: nginx
