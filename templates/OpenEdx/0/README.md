@@ -10,11 +10,12 @@ This stack is based on the OpenEdX docker implementation in the [EdX configurati
 #### How to use
 1. Fill out the custom information and storage locations, note some storage locations are shared between containers so shared storage should be used.
 2. Once launched let it run until the EdxappMigrate container has finished, this sets up the mysql database and collects the static assets for nginx to serve, and should take around 15-20mins to complete. This only needs to be run once.
-3. Setup an initial django/openedx super user by executing a shell on either lms or cms and running and running the following commands:
+3. Setup an initial django/openedx super user by executing a shell on lms and running and running the following commands:
 ```bash
 cd /edx/app
 source edxapp/edxapp_env
-python /edx/app/edxapp/edx-platform/manage.py lms createsuperuser --settings aws
+python /edx/app/edxapp/edx-platform/manage.py lms --settings aws create_user -s -p edx -e user@example.com
+python /edx/app/edxapp/edx-platform/manage.py lms --settings aws changepassword user
 ```
 For more info on managing the edx application have a [look here](https://openedx.atlassian.net/wiki/display/OpenOPS/Managing+OpenEdX+Tips+and+Tricks)
 4. You should be good to go
