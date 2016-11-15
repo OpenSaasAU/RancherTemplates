@@ -130,6 +130,12 @@
           required: true
           default: "celery"
           type: "password"
+        - variable: EXPOSED_PORT
+          description: "Exposed Port Number"
+          label: "Port Number to expose"
+          required: true
+          default: "80"
+          type: "int"
     lb:
         load_balancer_config:
             haproxy_config: {}
