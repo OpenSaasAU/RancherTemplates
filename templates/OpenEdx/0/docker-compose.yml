@@ -3,10 +3,10 @@ db:
     labels:
         io.rancher.sidekicks: dbConfig
     environment:
-        MYSQL_ROOT_PASSWORD: password
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         MYSQL_DATABASE: edxapp
-        MYSQL_USER: edxapp001
-        MYSQL_PASSWORD: password
+        MYSQL_USER: ${MYSQL_EDXAPP_USER}
+        MYSQL_PASSWORD: ${MYSQL_EDXAPP_PASSWORD}
     volumes:
      - ${EDX_MYSQL_DATA_ROOT}:/var/lib/mysql
     volume_driver: ${volume_driver}
@@ -17,7 +17,7 @@ dbConfig:
         io.rancher.container.hostname_override: container_name
         io.rancher.container.start_once: true
     command: |
-      bash -c "sleep 2m; mysql -uroot -ppassword -h db -e \"create database edxapp_csmh;\""
+      bash -c "sleep 2m; mysql -uroot -p${MYSQL_EDXAPP_PASSWORD} -h db -e \"create database edxapp_csmh;\""
 
 mongo:
     labels:
@@ -33,7 +33,7 @@ mongoConfig:
         io.rancher.container.hostname_override: container_name
         io.rancher.container.start_once: true
     command: |
-      bash -c "sleep 2m; echo 'db.createUser({ user: \"edxapp\", pwd: \"password\", roles: [ { role: \"readWrite\", db: \"edxapp\" } ] });' > createEdxappUser.js; mongo mongo/edxapp createEdxappUser.js; echo 'db.createUser({ user: \"cs_comments_service\", pwd: \"password\", roles: [ { role: \"readWrite\", db: \"cs_comments_service\" } ] });' > createForumUser.js; mongo mongo/cs_comments_service createForumUser.js"
+      bash -c "sleep 2m; echo 'db.createUser({ user: \"${MONGO_EDXAPP_USER}\", pwd: \"${MONGO_EDXAPP_PASSWORD}\", roles: [ { role: \"readWrite\", db: \"edxapp\" } ] });' > createEdxappUser.js; mongo mongo/edxapp createEdxappUser.js; echo 'db.createUser({ user: \"${MONGO_FORUM_USER}\", pwd: \"${MONGO_FORUM_PASSWORD}\", roles: [ { role: \"readWrite\", db: \"cs_comments_service\" } ] });' > createForumUser.js; mongo mongo/cs_comments_service createForumUser.js"
     
 # Need to build our own for ES 0.9
 es:
@@ -55,8 +55,8 @@ rabbitmq:
      - ${EDX_RABBIT_DATA_ROOT}:/var/lib/rabbitmq
     volume_driver: ${volume_driver}
     environment:
-        RABBITMQ_DEFAULT_USER: celery
-        RABBITMQ_DEFAULT_PASS: celery
+        RABBITMQ_DEFAULT_USER: ${CELERY_EDXAPP_USER}
+        RABBITMQ_DEFAULT_PASS: ${CELERY_EDXAPP_PASSWORD}
 
 forums:
     image: opensaas/edx-forums
@@ -65,6 +65,8 @@ forums:
     volumes:
      - ${EDXAPP_CS_COMMENTS_ROOT}:/edx/app/forum/cs_comments_service
     volume_driver: ${volume_driver}
+    command: |
+        bash -c "rm -rf /edx/app/edx_ansible/edx_ansible; git clone https://github.com/OpenSaasAU/edx-configuration /edx/app/edx_ansible/edx_ansible; cd /edx/app/edx_ansible/edx_ansible/docker/plays; rm -f /edx/app/supervisor/conf.d/*; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook forum.yml -i '127.0.0.1,' -c local -e \"FORUM_MONGO_PASSWORD='${MONGO_FORUM_PASSWORD}' FORUM_MONGO_USER='${MONGO_FORUM_USER}\" -t 'install:base,install:configuration'; /edx/app/supervisor/venvs/supervisor/bin/supervisord -n --configuration /edx/app/supervisor/supervisord.conf"
    
 
 lms:
@@ -76,7 +78,7 @@ lms:
      - /dev/log:/dev/log
     volume_driver: ${volume_driver}
     command: |
-        bash -c "rm -rf /edx/app/edx_ansible/edx_ansible; git clone https://github.com/OpenSaasAU/edx-configuration /edx/app/edx_ansible/edx_ansible; cd /edx/app/edx_ansible/edx_ansible/docker/plays; rm -f /edx/app/supervisor/conf.d/*; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml -i '127.0.0.1,' -c local -e \"service_type='lms' EDXAPP_PLATFORM_NAME='${EDXAPP_PLATFORM_NAME}' EDXAPP_SITE_NAME='${EDX_DOMAIN_NAME}' EDXAPP_CMS_SITE_NAME='${STUDIO_DOMAIN_NAME}'\" -t 'install:app-requirements,install:base,install:configuration' -e@/edx/app/edx_ansible/edx_ansible/docker/build/edxapp/rancher_overrides.yml; /edx/app/supervisor/venvs/supervisor/bin/supervisord -n --configuration /edx/app/supervisor/supervisord.conf"
+        bash -c "rm -rf /edx/app/edx_ansible/edx_ansible; git clone https://github.com/OpenSaasAU/edx-configuration /edx/app/edx_ansible/edx_ansible; cd /edx/app/edx_ansible/edx_ansible/docker/plays; rm -f /edx/app/supervisor/conf.d/*; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml -i '127.0.0.1,' -c local -e \"service_variants_enabled=['lms'] EDXAPP_PLATFORM_NAME='${EDXAPP_PLATFORM_NAME}' EDXAPP_SITE_NAME='${EDX_DOMAIN_NAME}' EDXAPP_CMS_SITE_NAME='${STUDIO_DOMAIN_NAME}' EDXAPP_CELERY_USER='${CELERY_EDXAPP_USER}' EDXAPP_CELERY_PASSWORD='${CELERY_EDXAPP_PASSWORD}' EDXAPP_MYSQL_USER='${MYSQL_EDXAPP_USER}' EDXAPP_MYSQL_PASSWORD='${MYSQL_EDXAPP_PASSWORD}' EDXAPP_MYSQL_PASSWORD_ADMIN='${MYSQL_ROOT_PASSWORD}' EDXAPP_MONGO_USER='${MONGO_EDXAPP_USER}' EDXAPP_MONGO_PASSWORD='${MONGO_EDXAPP_PASSWORD}'\" -t 'install:app-requirements,install:base,install:configuration' -e@/edx/app/edx_ansible/edx_ansible/docker/build/edxapp/rancher_overrides.yml; /edx/app/supervisor/venvs/supervisor/bin/supervisord -n --configuration /edx/app/supervisor/supervisord.conf"
     
 cms:
     labels:
@@ -87,8 +89,19 @@ cms:
      - /dev/log:/dev/log
     volume_driver: ${volume_driver}
     command: |
-        bash -c "rm -rf /edx/app/edx_ansible/edx_ansible; git clone https://github.com/OpenSaasAU/edx-configuration /edx/app/edx_ansible/edx_ansible; cd /edx/app/edx_ansible/edx_ansible/docker/plays; rm -f /edx/app/supervisor/conf.d/*; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml -i '127.0.0.1,' -c local -e \"service_type='cms' EDXAPP_PLATFORM_NAME='${EDXAPP_PLATFORM_NAME}' EDXAPP_SITE_NAME='${EDX_DOMAIN_NAME}' EDXAPP_CMS_SITE_NAME='${STUDIO_DOMAIN_NAME}'\" -t 'install:app-requirements,install:base,install:configuration' -e@/edx/app/edx_ansible/edx_ansible/docker/build/edxapp/rancher_overrides.yml; /edx/app/supervisor/venvs/supervisor/bin/supervisord -n --configuration /edx/app/supervisor/supervisord.conf"
+        bash -c "rm -rf /edx/app/edx_ansible/edx_ansible; git clone https://github.com/OpenSaasAU/edx-configuration /edx/app/edx_ansible/edx_ansible; cd /edx/app/edx_ansible/edx_ansible/docker/plays; rm -f /edx/app/supervisor/conf.d/*; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml -i '127.0.0.1,' -c local -e \"service_variants_enabled=['cms'] EDXAPP_PLATFORM_NAME='${EDXAPP_PLATFORM_NAME}' EDXAPP_SITE_NAME='${EDX_DOMAIN_NAME}' EDXAPP_CMS_SITE_NAME='${STUDIO_DOMAIN_NAME}' EDXAPP_CELERY_USER='${CELERY_EDXAPP_USER}' EDXAPP_CELERY_PASSWORD='${CELERY_EDXAPP_PASSWORD}' EDXAPP_MYSQL_USER='${MYSQL_EDXAPP_USER}' EDXAPP_MYSQL_PASSWORD='${MYSQL_EDXAPP_PASSWORD}' EDXAPP_MYSQL_PASSWORD_ADMIN='${MYSQL_ROOT_PASSWORD}' EDXAPP_MONGO_USER='${MONGO_EDXAPP_USER}' EDXAPP_MONGO_PASSWORD='${MONGO_EDXAPP_PASSWORD}'\" -t 'install:app-requirements,install:base,install:configuration' -e@/edx/app/edx_ansible/edx_ansible/docker/build/edxapp/rancher_overrides.yml; /edx/app/supervisor/venvs/supervisor/bin/supervisord -n --configuration /edx/app/supervisor/supervisord.conf"
 
+edxworker:
+    labels:
+        io.rancher.container.pull_image: always
+    image: opensaas/edxapp:trusty-v3
+    volumes:
+     - ${EDXAPP_PLATFORM_ROOT}:/edx/app/edxapp/edx-platform
+     - /dev/log:/dev/log
+    volume_driver: ${volume_driver}
+    command: |
+        bash -c "rm -rf /edx/app/edx_ansible/edx_ansible; git clone https://github.com/OpenSaasAU/edx-configuration /edx/app/edx_ansible/edx_ansible; cd /edx/app/edx_ansible/edx_ansible/docker/plays; rm -f /edx/app/supervisor/conf.d/*; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml -i '127.0.0.1,' -c local -e \"service_variants_enabled:['cms','lms'] EDXAPP_PLATFORM_NAME='${EDXAPP_PLATFORM_NAME}' EDXAPP_SITE_NAME='${EDX_DOMAIN_NAME}' EDXAPP_CMS_SITE_NAME='${STUDIO_DOMAIN_NAME}' EDXAPP_CELERY_USER='${CELERY_EDXAPP_USER}' EDXAPP_CELERY_PASSWORD='${CELERY_EDXAPP_PASSWORD}' EDXAPP_MYSQL_USER='${MYSQL_EDXAPP_USER}' EDXAPP_MYSQL_PASSWORD='${MYSQL_EDXAPP_PASSWORD}' EDXAPP_MYSQL_PASSWORD_ADMIN='${MYSQL_ROOT_PASSWORD}' EDXAPP_MONGO_USER='${MONGO_EDXAPP_USER}' EDXAPP_MONGO_PASSWORD='${MONGO_EDXAPP_PASSWORD}' celery_worker='true'\" -t 'install:app-requirements,install:base,install:configuration' -e@/edx/app/edx_ansible/edx_ansible/docker/build/edxapp/rancher_overrides.yml; /edx/app/supervisor/venvs/supervisor/bin/supervisord -n --configuration /edx/app/supervisor/supervisord.conf"
+        
 edxappMigrate:
     image: opensaas/edxapp:trusty-v3
     volumes:
@@ -100,7 +113,7 @@ edxappMigrate:
         io.rancher.container.start_once: true
     volume_driver: ${volume_driver}
     command: |
-        bash -c "sleep 5m; rm -rf /edx/app/edx_ansible/edx_ansible; git clone https://github.com/OpenSaasAU/edx-configuration /edx/app/edx_ansible/edx_ansible; cd /edx/app/edx_ansible/edx_ansible/docker/plays; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml -i '127.0.0.1,' -c local -e \"migrate_db='yes' COMMON_MYSQL_MIGRATE_USER='root'\" -t 'install:configuration,install:app-requirements,install:code,gather_static_assets,migrate' -e@/edx/app/edx_ansible/edx_ansible/docker/build/edxapp/ansible_overrides.yml"
+        bash -c "sleep 5m; rm -rf /edx/app/edx_ansible/edx_ansible; git clone https://github.com/OpenSaasAU/edx-configuration /edx/app/edx_ansible/edx_ansible; cd /edx/app/edx_ansible/edx_ansible/docker/plays; /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml -i '127.0.0.1,' -c local -e \"migrate_db='yes' COMMON_MYSQL_MIGRATE_USER='root' EDXAPP_CELERY_USER='${CELERY_EDXAPP_USER}' EDXAPP_CELERY_PASSWORD='${CELERY_EDXAPP_PASSWORD}' EDXAPP_MYSQL_USER='${MYSQL_EDXAPP_USER}' EDXAPP_MYSQL_PASSWORD='${MYSQL_EDXAPP_PASSWORD}' EDXAPP_MYSQL_PASSWORD_ADMIN='${MYSQL_ROOT_PASSWORD}' EDXAPP_MONGO_USER='${MONGO_EDXAPP_USER}' EDXAPP_MONGO_PASSWORD='${MONGO_EDXAPP_PASSWORD}'\" -t 'install:configuration,install:app-requirements,install:code,gather_static_assets,migrate' -e@/edx/app/edx_ansible/edx_ansible/docker/build/edxapp/ansible_overrides.yml"
         
 nginx:
     image: nginx
@@ -123,5 +136,3 @@ lb:
      - lms:lms
     image: rancher/load-balancer-service
     stdin_open: true
-    
-    

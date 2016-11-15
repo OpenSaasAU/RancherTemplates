@@ -19,4 +19,4 @@ python /edx/app/edxapp/edx-platform/manage.py lms --settings aws changepassword 
 ```
 For more info on managing the edx application have a [look here](https://openedx.atlassian.net/wiki/display/OpenOPS/Managing+OpenEdX+Tips+and+Tricks)
 
-Any further platform customisation can be done up upgrading the cms and lms services and adding overrides to the ansible command.
+Any further platform customisation can be done by upgrading the cms and lms services and adding overrides to the ansible command.
