@@ -136,6 +136,11 @@
           required: true
           default: "80"
           type: "int"
+        - variable: DEMO_INSTALL
+          description: "Install the Demo Course?"
+          label: "Install the Demo Course?"
+          required: false
+          type: "boolean"
     lb:
         load_balancer_config:
             haproxy_config: {}
